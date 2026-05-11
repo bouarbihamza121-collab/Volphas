@@ -1,4 +1,4 @@
-const CACHE = 'volphas-v1';
+const CACHE = 'volphas-v2';
 
 // Core shell — pre-fetched on install so the app works offline immediately
 const PRECACHE_URLS = [
