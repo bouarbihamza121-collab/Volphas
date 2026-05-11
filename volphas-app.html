@@ -645,7 +645,7 @@ to{opacity:1;transform:scale(1)}}
   </div>
 <div class="screen" id="s-home">
   <div class="hdr">
-    <div class="logo"><img src="images/volph_icon.png" onerror="wolfFail(this)" style="width:40px;height:40px;object-fit:contain;flex-shrink:0"> Volphas</div>
+    <div class="logo"><img src="images/volph_icon.png" onerror="wolfFail(this)" style="width:40px;height:40px;object-fit:contain;flex-shrink:0"></div>
     <!-- Streak slot — flex:1 wrapper claims the middle space between the logo
          (right in RTL) and the chips (left in RTL), so the chip is centered
          without ever overlapping its neighbors. -->
@@ -760,13 +760,8 @@ to{opacity:1;transform:scale(1)}}
   <div class="bnav"><button class="nit" onclick="go('home')"><img class="ni-img" src="images/nav_home.png" alt="الرئيسية"><span class="nl">الرئيسية</span></button><button class="nit on" onclick="go('quests');renderQuests()"><img class="ni-img" src="images/nav_quests.png" alt="مهام"><span class="nl">مهام</span></button><button class="nit" onclick="go('rewards')"><img class="ni-img" src="images/nav_rewards.png" alt="المكافآت"><span class="nl">المكافآت</span></button><button class="nit" onclick="go('league');buildLeague()"><img class="ni-img" src="images/nav_league.png" alt="الدوري"><span class="nl">الدوري</span></button><button class="nit" onclick="go('profile');buildProfile()"><img class="ni-img" src="images/nav_profile.png" alt="ملفي"><span class="nl">ملفي</span></button></div>
 </div>
 <div class="screen" id="s-rewards">
-  <div style="padding:12px 18px;border-bottom:2.5px solid var(--BD);background:var(--V);display:flex;align-items:center;gap:12px;flex-shrink:0">
-    <button class="back-btn-pretty" onclick="exitStory()" aria-label="back">
-      <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
-        <path d="M14 6L8 12L14 18" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
-      </svg>
-    </button>
-    <div style="font-size:16px;font-weight:900;color:var(--T);display:flex;align-items:center;gap:7px"><svg width="26" height="26" viewBox="0 0 26 26" fill="none"><rect x="3" y="12" width="20" height="12" rx="3" fill="#CE82FF" stroke="#9B4DCA" stroke-width=".8"/><rect x="3" y="9" width="20" height="5" rx="2.5" fill="#E8A8FF" stroke="#9B4DCA" stroke-width=".8"/><path d="M13 9v15" stroke="#9B4DCA" stroke-width="1.5"/><path d="M10 9Q8 7 8 5.5C8 4 9 3 10 3Q11.5 4 13 5Q14.5 4 16 3Q17 3 18 4.5C18 6 16 7 13 9Q12 9 10 9Z" fill="#FFC800" stroke="#C49000" stroke-width=".8"/></svg> المكافآت</div>
+  <div class="hdr">
+    <div style="font-size:17px;font-weight:900;color:var(--WG);display:flex;align-items:center;gap:7px"><svg width="26" height="26" viewBox="0 0 26 26" fill="none"><rect x="3" y="12" width="20" height="12" rx="3" fill="#CE82FF" stroke="#9B4DCA" stroke-width=".8"/><rect x="3" y="9" width="20" height="5" rx="2.5" fill="#E8A8FF" stroke="#9B4DCA" stroke-width=".8"/><path d="M13 9v15" stroke="#9B4DCA" stroke-width="1.5"/><path d="M10 9Q8 7 8 5.5C8 4 9 3 10 3Q11.5 4 13 5Q14.5 4 16 3Q17 3 18 4.5C18 6 16 7 13 9Q12 9 10 9Z" fill="#FFC800" stroke="#C49000" stroke-width=".8"/></svg> المكافآت</div>
   </div>
   <div class="scroll">
     <!-- Volphas Premium card — friendly soft-blue base with sunny yellow
@@ -2724,8 +2719,6 @@ function storyNext(){
     if(!st.picked && st.picked!==0){ return; } // no pick yet
     var q = st.story.questions[st.qIdx];
     var ok = (st.picked === q.ans);
-    // Match regular exercise feedback — chime on right, gentle thud on wrong.
-    try{ if(ok) playRight(); else playWrong(); }catch(e){}
     if(ok){ st.correct++; }
     st.picked = null;
     st.qIdx++;
@@ -2767,6 +2760,9 @@ function _renderStoryQuestion(){
 function _storyPickQ(i, el){
   var st = _storyState; if(!st) return;
   st.picked = i;
+  // Play right/wrong sound immediately on pick
+  var q = st.story.questions[st.qIdx];
+  try{ if(i === q.ans) playRight(); else playWrong(); }catch(e){}
   // Visually select
   var opts = document.querySelectorAll('#story-body .mopt');
   opts.forEach(function(b){ b.style.background='var(--W)'; b.style.borderColor='var(--BD)'; });
@@ -3792,7 +3788,7 @@ function watchAd(){
   ov.style.cssText='position:fixed;inset:0;background:rgba(0,0,0,.94);z-index:9999;display:flex;flex-direction:column;align-items:center;justify-content:center;color:#fff;font-family:var(--font);text-align:center;padding:24px';
   ov.innerHTML='<div style="font-size:10px;letter-spacing:.22em;color:rgba(255,255,255,.45);margin-bottom:16px">إعلان · AD</div>'
     +'<div style="font-size:26px;font-weight:900;margin-bottom:6px">شكراً لمشاهدة الإعلان</div>'
-    +'<div style="font-size:13px;color:rgba(255,255,255,.7);margin-bottom:30px;direction:rtl;line-height:1.6">سيتم تعبئة قلوبك بالكامل عند انتهاء الإعلان</div>'
+    +'<div style="font-size:13px;color:rgba(255,255,255,.7);margin-bottom:30px;direction:rtl;line-height:1.6">ستحصل على قلب إضافي عند انتهاء الإعلان ❤️</div>'
     +'<div id="ad-sim-cd" style="width:90px;height:90px;border-radius:50%;border:5px solid #58CC02;display:flex;align-items:center;justify-content:center;font-size:36px;font-weight:900;color:#58CC02">5</div>'
     +'<div style="margin-top:32px;font-size:11px;color:rgba(255,255,255,.45);direction:rtl;line-height:1.5">المعلِنون يدعمون التعلم المجاني<br>للمزيد بدون إعلانات: Volphas Plus</div>';
   document.body.appendChild(ov);
@@ -3804,8 +3800,8 @@ function watchAd(){
     if(n<=0){
       clearInterval(t);
       var o=document.getElementById('ad-sim-ov'); if(o) o.remove();
-      // Reward: refill hearts to full and reset refill timer.
-      S.hearts=S.maxHearts;
+      // Reward: +1 heart per ad (not full refill — keeps the economy fair).
+      S.hearts=Math.min(S.hearts+1,S.maxHearts);
       S.lastRefill=Date.now();
       if(_refillInterval){ clearInterval(_refillInterval); _refillInterval=null; }
       updHdr(); save();
@@ -3813,7 +3809,7 @@ function watchAd(){
       var cont=document.getElementById('btn-cont');
       if(cont){ cont.disabled=false; cont.style.opacity=''; cont.style.pointerEvents=''; }
       var nh=document.getElementById('nh-ov'); if(nh) nh.classList.remove('show');
-      try{ showNotif('❤️ تمت تعبئة القلوب! واصل التعلم 🐺'); }catch(e){}
+      try{ showNotif('❤️ +قلب واحد! واصل التعلم 🐺'); }catch(e){}
     }
   },1000);
 }
@@ -4226,7 +4222,7 @@ function onboardSubmitAuth(){
   if(!nm){ document.getElementById('ob-name').classList.add('err'); return; }
   if(!em||em.indexOf('@')<0){ document.getElementById('ob-email').classList.add('err'); return; }
   S.name=nm; S.email=em;
-  try{ localStorage.setItem('vp_name',nm); localStorage.setItem('vp_email',em); }catch(e){}
+  try{ localStorage.setItem('vp_name',nm); localStorage.setItem('vp_email',em); localStorage.setItem('vp_onboarded','1'); }catch(e){}
   save();
   _onboardShowLang();
 }
