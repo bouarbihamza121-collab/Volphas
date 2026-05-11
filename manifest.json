@@ -1,0 +1,27 @@
+{
+  "name": "Volphas — تعلم الإنجليزية",
+  "short_name": "Volphas",
+  "description": "تطبيق تعلم اللغة الإنجليزية للناطقين بالعربية",
+  "start_url": "./volphas-app.html",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#FFF8F0",
+  "theme_color": "#58CC02",
+  "lang": "ar",
+  "dir": "rtl",
+  "icons": [
+    {
+      "src": "images/volph_icon.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "images/volph_icon.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}

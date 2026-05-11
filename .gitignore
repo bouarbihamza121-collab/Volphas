@@ -1,0 +1,13 @@
+# Backup zips and temp files
+*.zip
+*.tmp.*
+
+# Background-removal backup folders (already applied to main images)
+images/volphas-bg-fixes/
+images/volphas-bg-fixes-2/
+
+# Python tools — not needed on the web server
+tools/
+
+# Claude Code local config
+.claude/
