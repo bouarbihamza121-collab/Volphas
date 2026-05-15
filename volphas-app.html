@@ -523,27 +523,9 @@ to{opacity:1;transform:translateX(-50%) translateY(0) scale(1)}}
 
 
 
-/* Unit popup — Duolingo style */
+/* Unit popup */
 
 
-
-.unit-popup.pop-locked::before{border-bottom-color:var(--V3);}
-
-.unit-popup.pop-done::before{border-bottom-color:var(--BL);}
-to{opacity:1;transform:scale(1)}}
-.pop-title{font-size:15px;font-weight:900;color:#fff;margin-bottom:3px}
-.pop-sub{font-size:11px;color:rgba(255,255,255,.8);margin-bottom:12px;line-height:1.4;direction:rtl}
-.pop-btn{padding:11px 20px;border-radius:30px;border:none;font-family:var(--font);
-  font-size:13px;font-weight:900;cursor:pointer;transition:all .15s;
-  text-transform:uppercase;letter-spacing:.04em;width:100%;
-  background:#fff;box-shadow:0 3px 0 rgba(0,0,0,.15)}
-.pop-btn:active{transform:translateY(2px);box-shadow:none}
-.pop-btn.btn-start{color:var(--GD)}
-.pop-btn.btn-review{color:var(--BLD)}
-.pop-btn.btn-locked{color:var(--T3);cursor:default;background:var(--V2);box-shadow:none}
-
-
-@keyframes popIn{from{opacity:0;transform:translateX(-50%) scale(.88)}to{opacity:1;transform:translateX(-50%) scale(1)}}
 .pop-title{font-size:15px;font-weight:900;color:var(--T);margin-bottom:4px}
 .pop-sub{font-size:11px;color:var(--T2);margin-bottom:12px;direction:rtl;line-height:1.5}
 .pop-btn{padding:11px 20px;border-radius:30px;border:none;font-family:var(--font);
@@ -555,15 +537,14 @@ to{opacity:1;transform:scale(1)}}
 .pop-btn.btn-locked{background:var(--V3);color:var(--T3);box-shadow:none;cursor:default}
 
 .unit-popup{
-  position:relative;
-  left:50%;transform:translateX(-50%);
+  position:fixed;
+  left:50%;top:50%;transform:translate(-50%,-50%);
   background:var(--W);border:2.5px solid var(--BD);border-radius:18px;
-  padding:16px;width:240px;text-align:center;
+  padding:16px;width:260px;text-align:center;
+  z-index:900;
   box-shadow:0 8px 32px rgba(0,0,0,.22);
-  z-index:100;
-  margin-top:10px;
   animation:popIn .18s cubic-bezier(.4,2,.6,1) forwards}
-@keyframes popIn{from{opacity:0;transform:translateX(-50%) scale(.88)}to{opacity:1;transform:translateX(-50%) scale(1)}}
+@keyframes popIn{from{opacity:0;transform:translate(-50%,-50%) scale(.88)}to{opacity:1;transform:translate(-50%,-50%) scale(1)}}
 </style>
 </head>
 <body>
@@ -625,10 +606,10 @@ to{opacity:1;transform:scale(1)}}
     </div>
 
     <!-- STEP 2: language picker -->
-    <div class="ob-wrap" id="ob-step-lang" style="max-width:480px;display:none">
-      <img src="images/volph_smile.png" onerror="wolfFail(this)" style="width:110px;margin-bottom:8px;animation:bIn .8s cubic-bezier(.4,2,.6,1)">
-      <div style="font-size:23px;font-weight:900;color:var(--WG);margin-bottom:4px">رائع، <span id="ob-greet">صديقي</span>!</div>
-      <div style="font-size:13px;color:var(--T2);margin-bottom:20px;direction:rtl;line-height:1.7">اختر اللغة التي تريد تعلمها</div>
+    <div class="ob-wrap" id="ob-step-lang" style="max-width:480px;display:none;justify-content:flex-start;overflow-y:auto;padding-bottom:32px">
+      <img src="images/volph_smile.png" onerror="wolfFail(this)" style="width:110px;margin-bottom:8px;animation:bIn .8s cubic-bezier(.4,2,.6,1);flex-shrink:0">
+      <div style="font-size:23px;font-weight:900;color:var(--WG);margin-bottom:4px;flex-shrink:0">رائع، <span id="ob-greet">صديقي</span>!</div>
+      <div style="font-size:13px;color:var(--T2);margin-bottom:20px;direction:rtl;line-height:1.7;flex-shrink:0">اختر اللغة التي تريد تعلمها</div>
       <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;width:100%;direction:rtl">
         <div class="ob-lang" onclick="onboardPickLang('en')"><span class="ob-flag">🇬🇧</span><div><div class="ob-en">English</div><div class="ob-ar">الإنجليزية</div></div></div>
         <div class="ob-lang ob-lang-soon"><span class="ob-flag">🇫🇷</span><div><div class="ob-en">French</div><div class="ob-ar">الفرنسية</div><span class="ob-soon">قريباً</span></div></div>
@@ -1268,11 +1249,11 @@ function buildLeague(){
       var ring      = isCurrent
         ? 'background:rgba(255,255,255,.22);border:2px solid '+L.col+';box-shadow:0 0 14px '+L.col+'66'
         : 'background:rgba(255,255,255,.04)';
-      ladder += '<div title="'+L.name+'" style="display:flex;flex-direction:column;align-items:center;gap:3px;flex:1;min-width:32px">'
-        + '<div style="width:'+slotSize+'px;height:'+slotSize+'px;border-radius:50%;display:flex;align-items:center;justify-content:center;'+ring+';transition:all .25s">'
+      ladder += '<div title="'+L.name+'" style="display:flex;flex-direction:column;align-items:center;gap:3px;flex:1;min-width:32px;max-width:52px;overflow:hidden">'
+        + '<div style="width:'+slotSize+'px;height:'+slotSize+'px;border-radius:50%;display:flex;align-items:center;justify-content:center;'+ring+';transition:all .25s;flex-shrink:0">'
           + '<img src="images/'+L.img+'" alt="'+L.short+'" style="width:'+imgSize+'px;height:'+imgSize+'px;object-fit:contain;'+imgFilter+'">'
         + '</div>'
-        + '<div style="font-size:9px;font-weight:'+(isCurrent?900:700)+';color:'+(isCurrent?'#FFE066':'rgba(255,255,255,.55)')+';white-space:nowrap">'+L.short+'</div>'
+        + '<div style="font-size:9px;font-weight:'+(isCurrent?900:700)+';color:'+(isCurrent?'#FFE066':'rgba(255,255,255,.55)')+';white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:100%;text-align:center">'+L.short+'</div>'
         + '</div>';
       if(i < LEAGUES.length-1){
         ladder += '<div style="font-size:10px;color:rgba(255,255,255,.3);align-self:flex-start;margin-top:18px">›</div>';
@@ -2196,14 +2177,15 @@ var _claimedTreasures=JSON.parse(localStorage.getItem('vp_treasures')||'{}');
 
 
 function _appendPopup(pop,btnEl,nodeEl){
-  var target = nodeEl || btnEl;
-  if(!target){ console.warn('_appendPopup: no target'); return; }
-  target.appendChild(pop);
+  // Append to .phone (not to the transformed .unode) so position:fixed centers
+  // relative to the viewport, not a transformed ancestor.
+  var root = document.querySelector('.phone') || document.body;
+  root.appendChild(pop);
   _activePopup = pop;
   setTimeout(function(){
     document.addEventListener('click', function h(e){
       var t = nodeEl || btnEl;
-      if(!t || (!pop.contains(e.target) && !t.contains(e.target))){
+      if(!pop.contains(e.target) && (!t || !t.contains(e.target))){
         closePopup();
         document.removeEventListener('click', h);
       }
@@ -2345,16 +2327,47 @@ function buildMap(){
   var p=document.getElementById('upath');if(!p) return;p.innerHTML='';
   document.addEventListener('click',function(e){if(!e.target.closest('.unode')) closePopup();});
 
-  // Determine which treasure chests are unlocked based on units done
-  var doneCount=0;
+  // Split units into three pools: teaching, treasure chests, stories
+  var teachPool=[], chestPool=[], storyPool=[];
+  UNITS.forEach(function(u){
+    if(u.treasure) chestPool.push(u);
+    else if(u.story) storyPool.push(u);
+    else teachPool.push(u);
+  });
 
-  UNITS.forEach(function(u,i){
+  // Build display sequence: u, u, CHEST, u, u, STORY, u, u, CHEST, ...
+  // Position (1-based): pos%4===2 → chest, pos%4===0 → story
+  var displaySeq=[];
+  var ci=0, si=0;
+  for(var ti=0;ti<teachPool.length;ti++){
+    displaySeq.push(teachPool[ti]);
+    var pos=ti+1; // 1-based teaching unit position
+    if(pos%4===2){
+      // After every 2nd unit → chest (auto-generate if pool runs dry)
+      var chest;
+      if(ci<chestPool.length){
+        chest=chestPool[ci]; chest.unlockAfter=pos; ci++;
+      } else {
+        var autoIdx=ci+si;
+        chest={id:'auto_chest_'+autoIdx,treasure:true,
+               reward:autoIdx%2===0?'hearts':'mini-rock',
+               rewardAmt:autoIdx%2===0?2:1,
+               unlockAfter:pos,state:'locked'};
+        ci++;
+      }
+      displaySeq.push(chest);
+    } else if(pos%4===0){
+      // After every 4th unit → story/dialogue (cycle through pool so it never skips)
+      if(storyPool.length>0){
+        displaySeq.push(storyPool[si%storyPool.length]);
+        si++;
+      }
+    }
+  }
+
+  displaySeq.forEach(function(u,i){
     var node=document.createElement('div');
     node.className='unode';
-    // Smoother winding trail — longer wavelength (Math.PI/4) gives gentler
-    // S-curves than the old zig-zag, and a smaller amplitude (56px) keeps the
-    // path feeling deliberate rather than jittery while still being clearly
-    // not a ruler-line.
     var off = Math.round(Math.sin(i * Math.PI/4) * 56);
     node.style.cssText='position:relative;display:flex;flex-direction:column;align-items:center;gap:6px;margin:0 auto 22px;width:96px;transform:translateX('+off+'px);z-index:1';
 
@@ -2366,21 +2379,24 @@ function buildMap(){
       var sDone = u.state==='done';
       var sNext = u.state==='next';
       var sCls = 'ubtn story-btn '+(sDone?'done':sNext?'next':'locked');
-      var sBadge = sNext?'<div class="npill" style="background:#FFD700;color:#7A5000">قصة 📖</div>':'';
+      var typeLabel = u.type==='dialogue' ? '💬 حوار' : '📖 قصة';
+      var sBadge = sNext?'<div class="npill" style="background:#FFD700;color:#7A5000">'+typeLabel+'</div>':'';
       var sIcon = _storyIcon(sDone, sUnlocked);
       var sBtn = document.createElement('button');
       sBtn.className = sCls;
       sBtn.innerHTML = sBadge + sIcon;
-      if(sUnlocked){
-        sBtn.onclick = function(e){e.stopPropagation();showStoryPopup(u,node,sBtn);};
-      } else {
-        sBtn.onclick = function(e){
-          e.stopPropagation(); closePopup();
-          var p2=document.createElement('div');p2.className='unit-popup';
-          p2.innerHTML='<div class="pop-title">'+(u.titleAr||'قصة مقفلة')+'</div><div class="pop-sub" style="margin-bottom:0">أكمل الوحدات السابقة لفتح القصة 🔒</div>';
-          _appendPopup(p2,node);
-        };
-      }
+      (function(uu,nn,sb){
+        if(sUnlocked){
+          sb.onclick = function(e){e.stopPropagation();showStoryPopup(uu,nn,sb);};
+        } else {
+          sb.onclick = function(e){
+            e.stopPropagation(); closePopup();
+            var p2=document.createElement('div');p2.className='unit-popup';
+            p2.innerHTML='<div class="pop-title">'+(uu.titleAr||'قصة مقفلة')+'</div><div class="pop-sub" style="margin-bottom:0">أكمل الوحدات السابقة لفتح القصة 🔒</div>';
+            _appendPopup(p2,nn);
+          };
+        }
+      })(u,node,sBtn);
       node.appendChild(sBtn);
       var lbl=document.createElement('div');
       lbl.className='ulbl';
@@ -2397,28 +2413,30 @@ function buildMap(){
       var btn=document.createElement('button');
       btn.className='ubtn treasure'+(isClaimed?' claimed':'')+(unlocked&&!isClaimed?' pulse-treasure':'');
       btn.innerHTML=_treasureIcon(isClaimed,unlocked,u.reward);
-      if(unlocked){
-        btn.onclick=function(e){e.stopPropagation();showTreasurePopup(u,node,btn);};
-      } else {
-        btn.onclick=function(e){
-          e.stopPropagation();closePopup();
-          var p2=document.createElement('div');p2.className='unit-popup';
-          p2.innerHTML='<div class="pop-title">صندوق مقفل</div><div class="pop-sub" style="margin-bottom:0">أكمل '+u.unlockAfter+' وحدات لفتحه 🔒</div>';
-          _appendPopup(p2,node);
-        };
-      }
+      (function(uu,nn,bb){
+        if(unlocked){
+          bb.onclick=function(e){e.stopPropagation();showTreasurePopup(uu,nn,bb);};
+        } else {
+          bb.onclick=function(e){
+            e.stopPropagation();closePopup();
+            var p2=document.createElement('div');p2.className='unit-popup';
+            p2.innerHTML='<div class="pop-title">صندوق مقفل</div><div class="pop-sub" style="margin-bottom:0">أكمل '+uu.unlockAfter+' وحدات لفتحه 🔒</div>';
+            _appendPopup(p2,nn);
+          };
+        }
+      })(u,node,btn);
       node.appendChild(btn);
     } else {
       var isDone=u.state==='done',isNext=u.state==='next',isLocked=u.state==='locked';
-      if(isDone) doneCount++;
       var badge=isNext?'<div class="npill">التالي 🚀</div>':'';
       var cls='ubtn '+(isDone?'done':isNext?'next':'locked');
-      // 4 paws per unit — one lights up (shiny orange) for each of the 4 lessons completed.
       var filled = isDone ? 4 : (u.lessonsDone||0);
       var inner = paws4_svg_inline(filled);
       var btn2=document.createElement('button');
       btn2.className=cls;btn2.innerHTML=badge+inner;
-      btn2.onclick=function(e){e.stopPropagation();showUnitPopup(u,node,isDone,isNext,isLocked,btn2);};
+      (function(uu,nn,bb2,d,nx,lk){
+        bb2.onclick=function(e){e.stopPropagation();showUnitPopup(uu,nn,d,nx,lk,bb2);};
+      })(u,node,btn2,isDone,isNext,isLocked);
       node.appendChild(btn2);
     }
 
@@ -2715,18 +2733,13 @@ function storyNext(){
     st.qIdx = 0;
     _renderStoryQuestion();
   } else if(st.phase === 'qa'){
-    // picked answer — grade and advance
-    if(!st.picked && st.picked!==0){ return; } // no pick yet
-    var q = st.story.questions[st.qIdx];
-    var ok = (st.picked === q.ans);
-    if(ok){ st.correct++; }
+    // Grading already happened in _storyPickQ — just advance
+    if(!st.hasGraded){ return; } // nothing selected yet
     st.picked = null;
+    st.hasGraded = false;
     st.qIdx++;
-    if(st.qIdx >= (st.story.questions||[]).length){
-      _finishStory();
-    } else {
-      _renderStoryQuestion();
-    }
+    var _advance = st.qIdx >= (st.story.questions||[]).length ? _finishStory : _renderStoryQuestion;
+    setTimeout(_advance, 200);
   } else if(st.phase === 'done'){
     exitStory();
     goMap();
@@ -2736,6 +2749,8 @@ function storyNext(){
 // Render one comprehension question. Uses the same MCQ-ish pattern as regular exercises.
 function _renderStoryQuestion(){
   var st = _storyState; if(!st) return;
+  st.hasGraded = false;
+  st.picked = null;
   var q = st.story.questions[st.qIdx];
   var total = (st.story.questions||[]).length;
   var title = document.getElementById('story-title');
@@ -2759,16 +2774,29 @@ function _renderStoryQuestion(){
 
 function _storyPickQ(i, el){
   var st = _storyState; if(!st) return;
-  st.picked = i;
-  // Play right/wrong sound immediately on pick
+  if(st.hasGraded) return; // prevent double-click after grading
   var q = st.story.questions[st.qIdx];
-  try{ if(i === q.ans) playRight(); else playWrong(); }catch(e){}
-  // Visually select
+  var ok = (i === q.ans);
+  st.picked = i;
+  st.hasGraded = true;
+  if(ok){ st.correct++; }
+  // Play sound immediately on selection
+  try{ if(ok) playRight(); else playWrong(); }catch(e){}
+  // Show visual feedback on all options
   var opts = document.querySelectorAll('#story-body .mopt');
-  opts.forEach(function(b){ b.style.background='var(--W)'; b.style.borderColor='var(--BD)'; });
-  if(el){ el.style.background='#E5F0FF'; el.style.borderColor='#1CB0F6'; }
+  opts.forEach(function(b, idx){
+    b.disabled = true;
+    b.style.transition = 'all .2s';
+    if(idx === q.ans){
+      b.style.background='var(--GL)'; b.style.borderColor='var(--G)'; b.style.color='var(--GD)';
+    } else if(idx === i && !ok){
+      b.style.background='var(--RL)'; b.style.borderColor='var(--R)'; b.style.color='var(--R)';
+    } else {
+      b.style.opacity='0.45';
+    }
+  });
   var btn = document.getElementById('story-next-btn');
-  if(btn){ btn.disabled = false; btn.className = 'btn btn-g'; }
+  if(btn){ btn.disabled = false; btn.className = ok ? 'btn btn-g' : 'btn btn-r'; btn.textContent = 'التالي →'; }
 }
 
 // Summary screen after last question.
